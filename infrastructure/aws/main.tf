@@ -55,6 +55,6 @@ resource "aws_security_group" "security_set" {
 }
 
 resource "aws_eip" "eip_integration" {
-  instance = aws_instance.ws_airbyte_001.id
+  instance = aws_instance.ws_airbyte_production.id
   vpc      = true
 }
