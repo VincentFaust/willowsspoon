@@ -17,7 +17,7 @@ provider "aws" {
   profile = "Vincent"
 }
 
-resource "aws_instance" "ws_airbyte_001" {
+resource "aws_instance" "ws_airbyte_production" {
   ami           = "ami-0103f211a154d64a6"
   instance_type = "t2.medium"
 }
