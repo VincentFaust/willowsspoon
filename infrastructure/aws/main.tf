@@ -22,7 +22,7 @@ resource "aws_instance" "ws_airbyte_production" {
   instance_type = "t2.medium"
 
   tags = {
-    name        = "ws_extract_load_production"
+    name        = "ws_airbyte_production"
     enviornment = "production"
   }
 }
