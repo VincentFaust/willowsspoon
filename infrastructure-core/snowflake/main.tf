@@ -25,14 +25,15 @@ resource "snowflake_warehouse" "warehouse" {
 }
 
 resource "snowflake_warehouse" "warehouse_etl" {
-  provider = snowflake.sys_admin
-  name     = "ETL"
+  provider       = snowflake.sys_admin
+  name           = "ETL"
+  warehouse_size = "medium"
 }
 
 resource "snowflake_schema" "schema" {
   provider = snowflake.sys_admin
   database = snowflake_database.db.name
-  name     = "RAW"
+  name     = "RAW_SOURCE"
 }
 
 resource "snowflake_database_grant" "grant" {
