@@ -20,6 +20,11 @@ provider "aws" {
 resource "aws_instance" "ws_airbyte_production" {
   ami           = "ami-0103f211a154d64a6"
   instance_type = "t2.medium"
+
+  tags = {
+    name        = "ws_extract_load_production"
+    enviornment = "production"
+  }
 }
 
 resource "aws_vpc" "vpc_set" {
