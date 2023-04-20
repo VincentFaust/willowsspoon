@@ -16,11 +16,48 @@ provider "snowflake" {
 }
 resource "snowflake_database" "db" {
   provider = snowflake.sys_admin
-  name     = "SPOON_ANALYTICS_PRODUCTION"
+  name     = "SPOON_PRODUCTION"
 }
-resource "snowflake_warehouse" "name" {
+
+resource "snowflake_warehouse" "warehouse" {
+  provider = snowflake.sys_admin
+  name     = "ANALYTICS"
+}
+
+resource "snowflake_warehouse" "warehouse_etl" {
+  provider = snowflake.sys_admin
+  name     = "ETL"
+}
+
+resource "snowflake_schema" "schema" {
+  provider = snowflake.sys_admin
+  database = snowflake_database.db.name
+  name     = "RAW"
+}
+
+resource "snowflake_database_grant" "grant" {
+  provider      = snowflake.sys_admin
+  database_name = snowflake_database.db.name
+  privilege     = "USAGE"
+
+}
+
+resource "snowflake_warehouse_grant" "grant" {
   provider       = snowflake.sys_admin
-  name           = "ANALYTICS_PRODUCTION"
-  warehouse_size = "medium"
-  auto_suspend   = 60
+  warehouse_name = snowflake_warehouse.warehouse.name
+  privilege      = "USAGE"
 }
+
+resource "snowflake_warehouse_grant" "grant_etl" {
+  provider       = snowflake.sys_admin
+  warehouse_name = snowflake_warehouse.warehouse.name
+  privilege      = "USAGE"
+}
+
+resource "snowflake_schema_grant" "grant" {
+  provider      = snowflake.sys_admin
+  database_name = snowflake_database.db.name
+  schema_name   = snowflake_schema.schema.name
+  privilege     = "USAGE"
+}
+
