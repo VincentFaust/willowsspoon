@@ -1,0 +1,12 @@
+version 2
+
+sources:
+  - name: raw_source
+    database: spoon_production
+    schema: raw_source
+    tables:
+      - name: orders 
+      - name: customers 
+      - name: customer_addresses
+      - name: products 
+      - name: products_options 
