@@ -9,4 +9,4 @@ sources:
       - name: customers 
       - name: customer_addresses
       - name: products 
-      - name: products_options 
+      - name: products_variants 
