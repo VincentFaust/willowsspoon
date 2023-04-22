@@ -1,0 +1,13 @@
+willows_spoon:
+  outputs:
+    dev:
+      account: ow82791.us-east-2.aws
+      database: spoon_production
+      password: {{env_var("snowflake_password")}}
+      role: accountadmin
+      schema: raw_source
+      threads: 1
+      type: snowflake
+      user: vincentffaust
+      warehouse: etl
+  target: dev
