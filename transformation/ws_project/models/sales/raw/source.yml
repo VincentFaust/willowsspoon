@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: shopify
+    database: spoon_production
+    schema: raw_source
+    tables:
+      - name: orders
+      - name: customers
+      - name: customers_addresses
+      - name: products
