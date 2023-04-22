@@ -1,4 +1,3 @@
-
 with source_data as (
 select 
     id 

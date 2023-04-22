@@ -9,6 +9,7 @@ with source_data as (
 select 
     created_at
     , handle 
+    , _airbyte_products_hashid
 from {{source("shopify", "products")}})
 
 
