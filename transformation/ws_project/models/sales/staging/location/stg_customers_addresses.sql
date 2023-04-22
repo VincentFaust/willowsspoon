@@ -1,5 +1,13 @@
+{{config(
+    materialized = "incremental", 
+    unique_key = "id", 
+    strategy = "delete+insert"
+)}}
+
+
 select 
-    last_name
+    id 
+    , last_name
     , city 
     , province
     , country_code 
