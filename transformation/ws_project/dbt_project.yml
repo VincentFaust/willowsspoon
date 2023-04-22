@@ -24,4 +24,3 @@ models:
     sales:
       +schema: staging  
       +materialized: table
-      +tags: staging
