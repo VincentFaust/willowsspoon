@@ -19,8 +19,21 @@ clean-targets:
 
 
 
+# models:
+#   willows_spoon:
+#     sales:
+#       +schema: staging  
+#       +materialized: table
+#       +tags: staging
+
+
 models:
   willows_spoon:
-    sales:
-      +schema: staging  
-      +materialized: table
+    sales: 
+      staging:
+        +materialized: table 
+        +schema: staging 
+      serving:
+        +materialized: table 
+        +schema: serving 
+    
