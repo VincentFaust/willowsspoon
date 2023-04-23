@@ -18,15 +18,6 @@ clean-targets:
   - "dbt_packages"
 
 
-
-# models:
-#   willows_spoon:
-#     sales:
-#       +schema: staging  
-#       +materialized: table
-#       +tags: staging
-
-
 models:
   willows_spoon:
     sales: 
