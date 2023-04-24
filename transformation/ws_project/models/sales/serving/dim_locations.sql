@@ -1,14 +1,15 @@
-with stg_customers_addresses as (
-    select * from {{ref("stg_customers_addresses")}}
+with stg_orders_billing_address as (
+    select *
+    from {{ref("stg_orders_billing_address")}}
 )
 
 ,
 
 transformed as (
-    select
-        {{dbt_utils.surrogate_key(["id","customer_id"])}} as location_key 
-        , * 
-    from stg_customers_addresses
+    select distinct 
+        {{dbt_utils.surrogate_key(["address1","zip","city"])}} as location_key
+        , *
+    from stg_orders_billing_address 
 )
 
 select *

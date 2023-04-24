@@ -6,6 +6,7 @@ sources:
     schema: raw_source
     tables:
       - name: orders
+      - name: orders_billing_address
       - name: customers
       - name: customers_addresses
       - name: products

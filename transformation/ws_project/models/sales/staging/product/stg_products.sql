@@ -1,6 +1,6 @@
 {{config(
     materialized = "incremental", 
-    unique_key = "created_at", 
+    unique_key = "_airbyte_products_hashid", 
     strategy = "delete+insert"
 )}}
 

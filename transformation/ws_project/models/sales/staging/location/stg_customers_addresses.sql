@@ -6,6 +6,7 @@ select
     , city 
     , province
     , country_code 
+    , zip 
 from {{ source ("shopify", "customers_addresses")}})
 
 
