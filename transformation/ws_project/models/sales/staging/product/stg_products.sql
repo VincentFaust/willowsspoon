@@ -15,4 +15,8 @@ from {{source("shopify", "products")}})
 
 select *
 from source_data 
+{% if  is_incremental() %}
 
+    where created_at >(select max(created_at) from {{ this }})
+    
+{% endif %}
