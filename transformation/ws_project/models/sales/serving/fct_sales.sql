@@ -15,6 +15,8 @@ with sales as (
     from {{ref("stg_orders")}}
 )
 
+,
+final as (
 select
     {{dbt_utils.surrogate_key(["checkout_id", "order_number"])}} as sales_key 
     , checkout_id
@@ -25,4 +27,7 @@ select
     , {{dbt_utils.surrogate_key(["address1","zip","city"])}} as location_key
     , {{dbt_utils.surrogate_key(["product_id"])}} as product_key 
     , {{dbt_utils.surrogate_key(["first_name", "last_name", "contact_email"])}} as customer_identifier_key
-from sales
+from sales)
+
+select *
+from final 
