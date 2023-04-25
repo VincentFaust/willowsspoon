@@ -3,7 +3,7 @@ willows_spoon:
     dev:
       account: ow82791.us-east-2.aws
       database: spoon_production
-      password: "{{ env_var("DBT_ENV_SECRET_PASSWORD") }}" 
+      password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}" 
       role: accountadmin
       schema: raw_source
       threads: 1
