@@ -1,4 +1,6 @@
 *.sql linguist-detectable=true
 *.sql linguist-language=SQL
+*.Dockerfile linguist-language=Dockerfile
+
 
 
