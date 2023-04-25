@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: dim_dates
+    columns:
+      - name: date_key
+        description: the surrogate key of the model using date_day 
+        test:
+          - not_null 
+          - unique 
+
+      

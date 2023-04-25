@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: fct_sales 
+    columns:
+      - name: sales_key 
+        description: the surrogate key of the model using checkout_id and order_number 
+        test:
+          - not_null 
+          - unique 
+      
+      - name: created_at_key
+        description: surrogate key of dates 
+        test:
+          - not_null 
+      
+      - name: location_key
+        description: surrogate key of locations 
+        test:
+          - not_null 
+      
+      - name: product_key 
+        description: surrogate key of products
+        test:
+          - not_null 
+      
+      - name: customer_identifier_key 
+        description: surrogate key of customers 
+        test:
+          - not_null 
