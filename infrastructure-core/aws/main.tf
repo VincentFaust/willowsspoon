@@ -1,3 +1,5 @@
+#EC2 instance hosting airbyte infrastructure 
+
 terraform {
   backend "local" {
     path = "terraform.tfstate"
