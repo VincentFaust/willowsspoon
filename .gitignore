@@ -5,8 +5,9 @@ terraform.tfstate.backup
 *.terraform
 dbt.env
 
-orchestration/logs
-orchestration/airflow-webserver.pid
+logs/
+orchestration/airflow/logs
+orchestration/airflow/airflow-webserver.pid
 airflow.cfg
 airflow.db
 standalone_admin_password.txt
