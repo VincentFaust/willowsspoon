@@ -2,14 +2,14 @@ import pendulum
 
 from airflow import DAG
 from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperator
-from airflow.operators.python import PythonOperator
+from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
 
 with DAG(
         dag_id="willowsspoon_etl",
-        schedule_interval='0 0 * * *',
+        schedule_interval=None, 
         start_date=pendulum.datetime(2020, 1, 1, tz="UTC"),
         catchup=False,
-        tags=["extract"]
+        tags=["extract-load"]
 ) as dag:
 
     airbyte_conn_id = "airbyte_vfaust"
@@ -24,3 +24,15 @@ with DAG(
         wait_seconds=3
     ) 
 
+    transform_sync = EcsRunTaskOperator(
+        task_id="transform_sync", 
+        aws_conn_id="aws_vincentffaust",
+        cluster="dbt-cluster-001", 
+        launch_type="EC2", 
+        task_definition="dbt-prod",
+        region="us-east-2",
+        overrides={}
+
+    )
+
+    trigger_sync >> transform_sync
