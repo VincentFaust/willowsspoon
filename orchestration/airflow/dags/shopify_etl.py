@@ -1,8 +1,3 @@
-"""
-This module defines a DAG that performs extract and load from a source to a target
-using Airbyte and ECS.
-"""
-
 import pendulum
 
 from airflow import DAG
@@ -16,13 +11,13 @@ with DAG(
     catchup=False,
     tags=["extract-load"],
 ) as dag:
-    AIRBYTE_CONN_ID = "airbyte_vfaust"
-    AIRBYTE_PGSF_CONN_ID = "883544fb-7d49-4f0e-9a3b-a311cddf1be6"
+    airbyte_conn_id = "airbyte_vfaust"
+    airbyte_pgsf_conn_id = "883544fb-7d49-4f0e-9a3b-a311cddf1be6"
 
     trigger_sync = AirbyteTriggerSyncOperator(
         task_id="trigger_sync",
-        airbyte_conn_id=AIRBYTE_CONN_ID,
-        connection_id=AIRBYTE_PGSF_CONN_ID,
+        airbyte_conn_id=airbyte_conn_id,
+        connection_id=airbyte_pgsf_conn_id,
         asynchronous=False,
         timeout=3600,
         wait_seconds=3,
