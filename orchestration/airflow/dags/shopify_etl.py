@@ -13,7 +13,7 @@ with DAG(
 ) as dag:
 
     airbyte_conn_id = "airbyte_vfaust"
-    airbyte_pgsf_conn_id = "f64f4d37-2266-4348-84f1-5935182231c7"
+    airbyte_pgsf_conn_id = "883544fb-7d49-4f0e-9a3b-a311cddf1be6"
 
     trigger_sync = AirbyteTriggerSyncOperator(
         task_id="trigger_sync", 
