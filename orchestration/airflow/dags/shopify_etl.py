@@ -1,3 +1,8 @@
+"""
+This module defines a DAG that performs extract and load from a source to a target
+using Airbyte and ECS.
+"""
+
 import pendulum
 
 from airflow import DAG
@@ -5,34 +10,33 @@ from airflow.providers.airbyte.operators.airbyte import AirbyteTriggerSyncOperat
 from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
 
 with DAG(
-        dag_id="willowsspoon_etl",
-        schedule_interval=None, 
-        start_date=pendulum.datetime(2020, 1, 1, tz="UTC"),
-        catchup=False,
-        tags=["extract-load"]
+    dag_id="willowsspoon_etl",
+    schedule_interval=None,
+    start_date=pendulum.datetime(2020, 1, 1, tz="UTC"),
+    catchup=False,
+    tags=["extract-load"],
 ) as dag:
-
-    airbyte_conn_id = "airbyte_vfaust"
-    airbyte_pgsf_conn_id = "883544fb-7d49-4f0e-9a3b-a311cddf1be6"
+    AIRBYTE_CONN_ID = "airbyte_vfaust"
+    AIRBYTE_PGSF_CONN_ID = "883544fb-7d49-4f0e-9a3b-a311cddf1be6"
 
     trigger_sync = AirbyteTriggerSyncOperator(
-        task_id="trigger_sync", 
-        airbyte_conn_id=airbyte_conn_id,
-        connection_id=airbyte_pgsf_conn_id,
+        task_id="trigger_sync",
+        airbyte_conn_id=AIRBYTE_CONN_ID,
+        connection_id=AIRBYTE_PGSF_CONN_ID,
         asynchronous=False,
         timeout=3600,
-        wait_seconds=3
-    ) 
-
-    transform_sync = EcsRunTaskOperator(
-        task_id="transform_sync", 
-        aws_conn_id="aws_vincentffaust",
-        cluster="dbt-cluster-001", 
-        launch_type="EC2", 
-        task_definition="dbt-prod",
-        region="us-east-2",
-        overrides={}
-
+        wait_seconds=3,
     )
 
+    transform_sync = EcsRunTaskOperator(
+        task_id="transform_sync",
+        aws_conn_id="aws_vincentffaust",
+        cluster="dbt-cluster-001",
+        launch_type="EC2",
+        task_definition="dbt-prod",
+        region="us-east-2",
+        overrides={},
+    )
+
+    # pylint: disable=W0104
     trigger_sync >> transform_sync
