@@ -13,8 +13,8 @@ jobs:
       - name: set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10
+          python-version: "3.10"
       
       - name: python linting 
         run: pylint --rcfile=./orchestration/airflow/.pylintrc ./orchestration/airflow/dags/*.py
-        
+
