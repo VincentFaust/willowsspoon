@@ -1,0 +1,20 @@
+name: integration 
+on: 
+  pull_request:
+    branches: [main]
+
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code 
+        uses: actions/checkout@v3
+      
+      - name: set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.10
+      
+      - name: python linting 
+        run: pylint --rcfile=./orchestration/airflow/.pylintrc ./orchestration/airflow/dags/*.py
+        
