@@ -33,5 +33,4 @@ with DAG(
         overrides={},
     )
 
-    # pylint: disable=W0104
     trigger_sync >> transform_sync
