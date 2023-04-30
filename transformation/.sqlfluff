@@ -1,8 +1,5 @@
 [sqlfluff]
 dialect = snowflake
+templater = dbt
+exclude_rules = L019,L025
 
-[sqlfluff:rules:L019]  # Comma placement
-enabled = False
-
-[sqlfluff:rules:L025]
-enabled = False
