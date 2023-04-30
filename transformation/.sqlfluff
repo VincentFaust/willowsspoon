@@ -1,0 +1,8 @@
+[sqlfluff]
+dialect = snowflake
+
+[sqlfluff:rules:L019]  # Comma placement
+enabled = False
+
+[sqlfluff:rules:L025]
+enabled = False
