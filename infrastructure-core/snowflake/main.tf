@@ -1,3 +1,5 @@
+#snowflake terraform configuring database, schema, warehouse and grants 
+
 terraform {
   backend "local" {
     path = "terraform.tfstate"
