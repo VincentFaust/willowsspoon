@@ -3,3 +3,5 @@ dialect = snowflake
 templater = dbt
 exclude_rules = L019,L025
 
+[sqlfluff:templater:jinja]
+apply_dbt_builtins = True
