@@ -1,0 +1,15 @@
+[sqlfluff]
+templater = dbt
+dialect = snowflake
+exclude_rules = LT04
+
+[sqlfluff:templater:dbt]
+project_dir = transformation/ws_project
+profiles_dir = transformation/ws_project
+target = dev
+
+[sqlfluff:templater:jinja]
+apply_dbt_builtins = True
+
+
+
