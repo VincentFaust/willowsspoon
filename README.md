@@ -1,8 +1,8 @@
 # Project Overview
 
-During the pandemic, my partner and I cofounded on a small business specializing in crafting homemade, fresh dog cookies and jerky. Our passion for creating these treats stemmed from our own experiences making them for our beloved pets. 
+During the pandemic, my partner and I cofounded a small business specializing in crafting homemade, fresh dog cookies and jerky. Our passion for creating these treats stemmed from our own experiences making them for our beloved pets. 
 
-We this idea might not have the potential for massive growth or scalability, but our primary motivation was building something from scratch and sharing other dog lovers. 
+We knew this idea might not have the potential for massive growth or scalability, but our primary motivation was building something from scratch and sharing it with other dog lovers. 
 
 ## Shopify ETL 
 
