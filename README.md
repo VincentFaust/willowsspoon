@@ -12,7 +12,7 @@ This project extracts data from the shopify API and loads it into snowflake. Onc
 
 
 
-## Code Overview
+## Codebase
 
 1. **Infrastructure-core**: Terraform code of cloud resources - ec2 instance (where Airbyte is hosted) and snowflake(database, schema, warehouses and grants). These resources are responsible for the extract-load portion of the pipeline. 
 
