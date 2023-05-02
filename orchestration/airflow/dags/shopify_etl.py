@@ -12,14 +12,14 @@ with DAG(
     tags=["extract-load"],
 ) as dag:
     AIRBYTE_CONN_ID = "airbyte_vfaust"
-    AIRBYTE_PGSF_CONN_ID = "772a0dc6-bea7-49cd-b210-ec0d5204079c"
+    AIRBYTE_PGSF_CONN_ID = "178bc5d9-f5c1-4004-8668-25148b72cd3e"
 
     trigger_sync = AirbyteTriggerSyncOperator(
         task_id="trigger_sync",
         airbyte_conn_id=AIRBYTE_CONN_ID,
         connection_id=AIRBYTE_PGSF_CONN_ID,
         asynchronous=False,
-        timeout=60,
+        timeout=3600,
         wait_seconds=3,
     )
 
