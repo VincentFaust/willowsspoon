@@ -12,7 +12,7 @@ with DAG(
     tags=["extract-load"],
 ) as dag:
     AIRBYTE_CONN_ID = "airbyte_vfaust"
-    AIRBYTE_PGSF_CONN_ID = "883544fb-7d49-4f0e-9a3b-a311cddf1be6"
+    AIRBYTE_PGSF_CONN_ID = "772a0dc6-bea7-49cd-b210-ec0d5204079c"
 
     trigger_sync = AirbyteTriggerSyncOperator(
         task_id="trigger_sync",
