@@ -19,7 +19,7 @@ with DAG(
         airbyte_conn_id=AIRBYTE_CONN_ID,
         connection_id=AIRBYTE_PGSF_CONN_ID,
         asynchronous=False,
-        timeout=3600,
+        timeout=60,
         wait_seconds=3,
     )
 
