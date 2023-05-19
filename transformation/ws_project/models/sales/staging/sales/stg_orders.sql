@@ -1,6 +1,15 @@
+{{
+    config(
+        materialized = "incremental", 
+        unique_id = "_airbyte_unique_key"
+    )
+}}
+
 with source_data as (
     select
         created_at,
+        _airbyte_unique_key, 
+        id, 
         checkout_id,
         current_total_tax,
         order_number,
@@ -20,3 +29,7 @@ with source_data as (
 
 select *
 from source_data
+
+{% if is_incremental() %}
+    where created_at > (select max(created_at) from {{ this }})
+{% endif %}
