@@ -7,6 +7,7 @@ sources:
     tables:
       - name: orders
       - name: orders_billing_address
+      - name: orders_line_items 
       - name: customers
       - name: customers_addresses
       - name: products
