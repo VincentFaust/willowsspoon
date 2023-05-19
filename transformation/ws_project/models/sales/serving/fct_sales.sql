@@ -1,6 +1,7 @@
 with sales as (
     select
-        checkout_id
+        id 
+        , checkout_id
         , current_total_tax
         , order_number
         , total_price
@@ -28,7 +29,6 @@ final as (
         , {{ dbt_utils.surrogate_key(["address1","zip","city"]) }} as location_key
         , {{ dbt_utils.surrogate_key(["product_id"]) }} as product_key
         , {{ dbt_utils.surrogate_key(["first_name", "last_name", "contact_email"]) }}
-{{ dbt_utils.surrogate_key(["first_name", "last_name", "contact_email"]) }}
             as customer_identifier_key
     from sales
 )
