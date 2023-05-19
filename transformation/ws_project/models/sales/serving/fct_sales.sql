@@ -18,7 +18,7 @@ with sales as (
 ,
 final as (
     select
-        {{ dbt_utils.surrogate_key(["checkout_id", "order_number"]) }}
+        {{ dbt_utils.surrogate_key(["id"]) }}
             as sales_key
         , checkout_id
         , current_total_tax
