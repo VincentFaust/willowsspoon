@@ -1,6 +1,10 @@
 with sales as (
     select
          _airbyte_unique_key
+        , _airbyte_orders_hashid
+        , line_item_id
+        , price 
+        , product_id
         , checkout_id
         , current_total_tax
         , order_number
@@ -13,14 +17,17 @@ with sales as (
         , last_name
         , date(created_at) as created_at
     from {{ ref("stg_orders") }}
-
+    join {{ ref("stg_orders_line_items")}}
+        using(_airbyte_orders_hashid)
 )
 
 ,
 final as (
     select
-        {{ dbt_utils.surrogate_key(["_airbyte_unique_key"]) }}
+        {{ dbt_utils.surrogate_key(["_airbyte_unique_key", "product_id", "line_item_id"]) }}
             as sales_key
+        , line_item_id
+        , product_id
         , checkout_id
         , current_total_tax
         , order_number

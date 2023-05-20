@@ -10,7 +10,6 @@ with source_data as (
         created_at
         , _airbyte_orders_hashid 
         , _airbyte_unique_key
-        , id
         , checkout_id
         , current_total_tax
         , order_number
