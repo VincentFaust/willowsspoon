@@ -29,7 +29,7 @@ resource "aws_instance" "ws_airbyte_production" {
   ]
 
   tags = {
-    name        = "ws_airbyte_production"
+    Name        = "ws_airbyte_production"
     enviornment = "production"
   }
 }
