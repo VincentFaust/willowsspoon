@@ -21,7 +21,7 @@ provider "aws" {
 
 resource "aws_instance" "ws_airbyte_production" {
   ami           = "ami-0b0f111b5dcb2800f"
-  instance_type = "t2.medium"
+  instance_type = "t2.large"
   key_name      = aws_key_pair.ws_key_pair.key_name
 
   vpc_security_group_ids = [
