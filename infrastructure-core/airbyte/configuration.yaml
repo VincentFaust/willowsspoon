@@ -1,0 +1,21 @@
+# Configuration for airbyte/source-shopify
+# Documentation about this connector can be found at https://docs.airbyte.com/integrations/sources/shopify
+resource_name: "shopify"
+definition_type: source
+definition_id: 9da77001-af33-4bcd-be46-6252bf9342b9
+definition_image: airbyte/source-shopify
+definition_version: 0.3.4
+
+# EDIT THE CONFIGURATION BELOW!
+configuration:
+  shop: "willows-spoon"# REQUIRED | string | The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.
+  start_date: "2020-01-01" # REQUIRED | string | The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated. | Example: 2021-01-01
+  credentials:
+    ## -------- Pick one valid structure among the examples below: --------
+    auth_method: "api_password" # REQUIRED | string
+    api_password: ${API_PASSWORD} # SECRET (please store in environment variables) | REQUIRED | string | The API Password for your private application in the `Shopify` store.
+    ## -------- Another valid structure for credentials: --------
+    # client_id: ${CLIENT_ID} # SECRET (please store in environment variables) | OPTIONAL | string | The Client ID of the Shopify developer application.
+    # auth_method: "oauth2.0" # REQUIRED | string
+    # access_token: ${ACCESS_TOKEN} # SECRET (please store in environment variables) | OPTIONAL | string | The Access Token for making authenticated requests.
+    # client_secret: ${CLIENT_SECRET} # SECRET (please store in environment variables) | OPTIONAL | string | The Client Secret of the Shopify developer application.
