@@ -18,7 +18,12 @@ provider "snowflake" {
 }
 resource "snowflake_database" "db" {
   provider = snowflake.sys_admin
-  name     = "SPOON_PRODUCTION"
+  name     = "SPOON_PROD"
+}
+
+resource "snowflake_database" "db_dev" {
+  provider = snowflake.sys_admin
+  name     = "SPOON_DEV"
 }
 
 resource "snowflake_warehouse" "warehouse" {
@@ -38,11 +43,23 @@ resource "snowflake_schema" "schema" {
   name     = "RAW_SOURCE"
 }
 
+resource "snowflake_schema" "schema_dev" {
+  provider = snowflake.sys_admin
+  database = snowflake_database.db_dev.name
+  name     = "RAW_SOURCE"
+}
+
 resource "snowflake_database_grant" "grant" {
   provider      = snowflake.sys_admin
   database_name = snowflake_database.db.name
   privilege     = "USAGE"
 
+}
+
+resource "snowflake_database_grant" "grant_dev" {
+  provider      = snowflake.sys_admin
+  database_name = snowflake_database.db_dev.name
+  privilege     = "USAGE"
 }
 
 resource "snowflake_warehouse_grant" "grant" {
@@ -61,5 +78,12 @@ resource "snowflake_schema_grant" "grant" {
   provider      = snowflake.sys_admin
   database_name = snowflake_database.db.name
   schema_name   = snowflake_schema.schema.name
+  privilege     = "USAGE"
+}
+
+resource "snowflake_schema_grant" "grant_dev" {
+  provider      = snowflake.sys_admin
+  database_name = snowflake_database.db_dev.name
+  schema_name   = snowflake_schema.schema_dev.name
   privilege     = "USAGE"
 }
