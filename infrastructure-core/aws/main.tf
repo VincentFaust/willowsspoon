@@ -21,7 +21,7 @@ provider "aws" {
 
 resource "aws_instance" "ws_airbyte_production" {
   ami           = "ami-0b0f111b5dcb2800f"
-  instance_type = "t2.large"
+  instance_type = "t2.medium"
   key_name      = aws_key_pair.ws_key_pair.key_name
 
   vpc_security_group_ids = [
@@ -47,7 +47,7 @@ resource "aws_security_group" "security_set" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["70.113.40.46/32"]
+    cidr_blocks = ["99.78.109.39/32"]
 
   }
 
