@@ -1,0 +1,19 @@
+resource_name: snowflake
+definition_type: destination
+definition_id: 424892c4-daac-4491-b35d-c6688ba547ba
+definition_image: airbyte/destination-snowflake
+definition_version: 0.4.61
+configuration:
+  host: co11573.us-east-2.aws.snowflakecomputing.com
+  role: sysadmin
+  schema: raw
+  database: spoon_raw
+  username: vfaust
+  warehouse: etl
+  encryption:
+    encryption_type: none
+  credentials:
+    password: '**********'
+  loading_method:
+    method: Standard
+  file_buffer_count: 10
