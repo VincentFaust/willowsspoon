@@ -9,11 +9,12 @@
 with source_data as (
 
     select
-        _airbyte_unique_key, 
-        first_name,
-        last_name,
-        email,
-        total_spent
+        created_at
+        , _airbyte_unique_key 
+        , first_name
+        , last_name
+        , email
+        , total_spent
     from {{ source ("shopify", "customers") }}
 )
 

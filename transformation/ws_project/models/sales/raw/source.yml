@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: shopify
     database: spoon_raw
-    schema: raw_source
+    schema: raw
     tables:
       - name: orders
       - name: orders_billing_address
