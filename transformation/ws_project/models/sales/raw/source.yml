@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: shopify
-    database: spoon_production
+    database: spoon_raw
     schema: raw_source
     tables:
       - name: orders
