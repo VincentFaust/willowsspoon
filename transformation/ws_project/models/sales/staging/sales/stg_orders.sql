@@ -8,7 +8,7 @@
 with source_data as (
     select
         created_at
-        , _airbyte_orders_hashid 
+        , _airbyte_orders_hashid
         , _airbyte_unique_key
         , checkout_id
         , current_total_tax

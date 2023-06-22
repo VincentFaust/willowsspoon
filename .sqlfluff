@@ -1,15 +1,18 @@
 [sqlfluff]
 templater = dbt
-dialect = snowflake
-exclude_rules = LT04
+dialect = snowflake 
+exclude_rules = LT05
 
 [sqlfluff:templater:dbt]
 project_dir = transformation/ws_project
 profiles_dir = transformation/ws_project
-target = dev
+target = dev 
 
 [sqlfluff:templater:jinja]
-apply_dbt_builtins = True
+apply_dbt_builtins = True 
 
+[sqlfluff:rules]
+comma_style = leading 
 
-
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower 
