@@ -3,7 +3,7 @@ with stg_customers as (
 )
 
 ,
-
+--test 
 transformed as (
     select
         {{ dbt_utils.surrogate_key(["first_name", "last_name", "email"]) }}
