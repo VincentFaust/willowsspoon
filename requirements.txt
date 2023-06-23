@@ -1,7 +1,17 @@
 apache-airflow==2.4.0
 apache-airflow-providers-airbyte==3.1.0
-apache-airflow-providers-amazon==5.1.0
+apache-airflow-providers-slack==5.1.0
+apache-airflow-providers-snowflake==3.3.0
+black==23.3.0
 dbt-core==1.4.6
 dbt-extractor==0.4.1
 dbt-snowflake==1.4.2
-sqlfluff-templater-dbt==2.1.1 
+Jinja2==3.1.2
+jinja2-simple-tags==0.4.1
+jmespath==1.0.1
+numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1675642767933/work
+pandas==1.5.3
+pytest==7.3.1
+PyYAML==6.0
+
+
