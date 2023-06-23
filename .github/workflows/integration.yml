@@ -3,6 +3,10 @@ on:
   pull_request:
     branches: [main]
 
+env:
+  GH_REF: ${{ github.ref }}
+  DBT_ENV_SECRET_PASSWORD: ${{ secrets.DBT_ENV_SECRET_PASSWORD }}
+
 jobs:
   integrate:
     runs-on: ubuntu-latest
@@ -28,4 +32,8 @@ jobs:
         run : |
           cd transformation/ws_project
           dbt deps 
+      
+      - name: run sql linting
+        run: 
+          sqlfluff lint transformation/ws_project 
 
