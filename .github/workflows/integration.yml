@@ -35,5 +35,5 @@ jobs:
 
       - name: run sql linting 
         run: 
-          sqlfluff lint transformation/
+          sqlfluff lint transformation/ws_project/ 
 
