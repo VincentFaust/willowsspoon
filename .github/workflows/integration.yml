@@ -36,4 +36,36 @@ jobs:
       - name: run sql linting 
         run:
           sqlfluff lint transformation/ws_project
+      
+      - name: checkout to main 
+        uses: actions/checkout@v3
+        with:
+          ref: main 
+      
+      - name: recreate dbt manifest 
+        run: | 
+          cd transformation/ws_project
+          dbt deps 
+          dbt compile --target prod 
+      
+      - name: upload dbt manifest 
+        uses: actions/upload-artifact@v3
+        with:
+          name: manifest.json
+          path: transformation/ws_project/target/manifest.json 
+      
+      - name: checkout to branch 
+        uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+        with: 
+          name: manifest.json 
+          path: transformation/ws_project
+      
+      - name: dbt run on modified state files 
+        run: | 
+          cd transformation/ws_project
+          dbt deps 
+          dbt run -m state:modified+1 --defer --state . --target ci 
+          dbt test -m state:modified+1 --defer --state . --target ci 
 
