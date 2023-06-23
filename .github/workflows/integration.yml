@@ -28,4 +28,8 @@ jobs:
         run : |
           cd transformation/ws_project
           dbt deps 
+      
+      - name: run sql linting 
+        run : 
+          sqlfluff lint transformation/ws_project
 
