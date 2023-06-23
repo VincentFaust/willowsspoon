@@ -39,6 +39,5 @@ jobs:
 
       - name: run sql linting 
         run: 
-          sqlfluff lint . 
-        working-directory: ./transformation/ws_project
+          sqlfluff lint ./transformation/ws_project
 
