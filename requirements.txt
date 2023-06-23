@@ -9,7 +9,6 @@ dbt-snowflake==1.4.2
 Jinja2==3.1.2
 jinja2-simple-tags==0.4.1
 jmespath==1.0.1
-numpy @ file:///Users/runner/miniforge3/conda-bld/numpy_1675642767933/work
 pandas==1.5.3
 pytest==7.3.1
 PyYAML==6.0
