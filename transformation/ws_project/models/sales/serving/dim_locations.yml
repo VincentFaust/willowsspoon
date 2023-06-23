@@ -10,15 +10,10 @@ models:
           - unique 
 
       - name: id
-
       - name: customer_id 
-
       - name: city 
-
       - name: province 
-
       - name: country_code 
-
       - name: zip 
 
 

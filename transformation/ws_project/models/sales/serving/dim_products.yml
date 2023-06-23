@@ -10,10 +10,7 @@ models:
           - unique 
 
       - name: product_ id 
-
       - name: price 
-
       - name: grams 
-
       - name: handle 
 

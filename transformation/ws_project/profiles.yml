@@ -25,7 +25,7 @@ willows_spoon:
     
     prod:
       account: co11573.us-east-2.aws
-      database: spoon_ci
+      database: spoon_prod 
       password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}" 
       role: accountadmin
       schema: staging 
