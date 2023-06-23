@@ -5,7 +5,7 @@ on:
 
 env:
   GH_REF: ${{ github.ref }}
-  DBT_ENV_SECRET_PASSWORD: ${{ secrets. DBT_ENV_SECRET_PASSWORD }}
+  DBT_ENV_SECRET_PASSWORD: ${{ secrets.DBT_ENV_SECRET_PASSWORD }}
 
 jobs:
   integrate:
