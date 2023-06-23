@@ -36,4 +36,15 @@ jobs:
       - name: run sql linting 
         run:
           sqlfluff lint transformation/ws_project
+      
+      - name: checkout to main 
+        uses: actions/checkout@v3
+        with:
+          ref: main 
+      
+      - name: generate dbt manifest 
+        run: | 
+          cd transformation/ws_project
+          dbt deps 
+          dbt compile --target prod 
 
