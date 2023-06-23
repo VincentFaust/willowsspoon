@@ -33,6 +33,10 @@ jobs:
           cd transformation/ws_project 
           dbt deps 
       
+      - name: Check files in the directory
+        run: ls -al
+        working-directory: ./transformation/ws_project
+
       - name: run sql linting 
         run: 
           sqlfluff lint . 
