@@ -8,13 +8,9 @@ models:
         test:
           - not_null 
           - unique 
-
       - name: first_name 
-
       - name: last_name 
-
       - name: email 
-
       - name: total_spent 
 
 
