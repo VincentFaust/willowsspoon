@@ -23,4 +23,9 @@ jobs:
       
       - name: python linting 
         run: pylint --rcfile=./orchestration/airflow/.pylintrc ./orchestration/airflow/dags/*.py
+      
+      - name: set up dbt deps 
+        run : |
+          cd transformation/ws_project
+          dbt deps 
 
