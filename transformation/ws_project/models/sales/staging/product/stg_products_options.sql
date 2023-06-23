@@ -4,7 +4,7 @@ with source_data as (
         , _airbyte_products_hashid
     from {{ source("shopify", "products_options") }}
 )
-
+--test
 
 select *
 from source_data
