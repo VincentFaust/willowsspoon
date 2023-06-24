@@ -9,6 +9,6 @@ with source_data as (
         , total_spent
     from {{ source ("shopify", "customers") }}
 )
-
+--test comment
 select *
 from source_data
