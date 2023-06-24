@@ -1,12 +1,12 @@
 # Project Overview
 
-During the pandemic, my partner and I cofounded a small business specializing in crafting homemade, fresh dog cookies and jerky. Our passion for creating these treats stemmed from our own experiences making them for our beloved pets. 
+During the pandemic, my partner and I cofounded a small business specializing in crafting homemade, fresh dog cookies and jerky. Our passion for creating these treats stemmed from our own experiences making them for our pets. 
 
-We knew this idea might not have the potential for massive growth or scalability, but our primary motivation was building something from scratch and sharing it with other dog lovers. 
+Our goal with the project was never to attempt to reach massive growth or scalability, but simply to build something from scratch and share one of our passions with other dog lovers. 
 
 ## Shopify ETL 
 
-This project extracts data from the shopify API and loads it into snowflake. Once in the warehouse, the data is transformed into facts and dimensions with DBT and is served into Hex. Finally, airfllow calls these services on a cron schedule. 
+This project extracts data from the shopify API and loads it into snowflake. Once in the warehouse, the data is transformed into facts and dimensions with DBT and is visualized with Hex. Finally, airfllow calls these services in a dag on a fixed schedule. 
 
 ![sales_locations](images/sales_breakouts.png)
 
@@ -16,11 +16,11 @@ This project extracts data from the shopify API and loads it into snowflake. Onc
 
 1. **Infrastructure-core**: Terraform code of cloud resources - ec2 instance (where Airbyte is hosted), snowflake(database, schema, warehouses and grants) and airbyte(code as configuration). These resources are responsible for the extract-load portion of the pipeline. 
 
-2. **Transformation**: DBT to translate raw data into facts and dimensions for a business process (sales). Input a logical separation between source, staging and serving into their own respective schemas. The end result in serving leaves downstream users with an atomic grain of sales data which is meant to act as a template for their use cases to build off. The DBT code is packaged up on a docker image and run on AWS ECS. 
+2. **Transformation**: DBT to translate raw data into facts and dimensions for a business process (sales). I've input a logical separation between source, staging and serving into their own respective schemas. The end result in serving leaves downstream users with an atomic grain of sales data which is meant to act as a template for their use cases to build off. The DBT code is packaged up on a docker image and then run on AWS ECS. 
 
-3. **Orchestration**: Airflow is run locally on a docker image and calls airbyte and dbt as tasks in a dag. 
+3. **Orchestration**: Airflow is run locally on a docker image and calls airbyte and dbt as tasks in a dag. My choice to run locally was driven solely by the expensive managed cloud offerings. 
 
-
+4. **Github Actions**: An integration pipeline to automate python linting (pylint) and sql (sqlfluff, both syntax and tests). A unique feature build into the pipeline is the configuration for branch based deployments, which runs and tests only modified sql files in their own database.
 
 
 ## Architecture Diagram 
@@ -165,11 +165,13 @@ This will generate the source for you. Replace all the config variables with you
 
 2. Install dbt on your local machine. For more information on how to install dbt, visit the official dbt website.
 
-3. Configure the dbt project to use the Snowflake destination.
+3. Configure the dbt project to use the Snowflake destination. 
 
-4. Build and test the dbt project locally.
+4. Customize your profiles yml for your needs. 
 
-5. Push the dbt project to a git repository.
+5. Build and test the dbt project locally.
+
+6. Push the dbt project to a git repository.
 
 # Running Airflow Locally
 
