@@ -2,13 +2,13 @@ with source_data as (
 
     select
         date_trunc("day", created_at)::date as created_at
-        , _airbyte_unique_key
+        , _airbyte_unique_key --unique key
         , first_name
         , last_name
         , email
         , total_spent
     from {{ source ("shopify", "customers") }}
 )
---test comment
+
 select *
 from source_data
