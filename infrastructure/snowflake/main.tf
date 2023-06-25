@@ -1,4 +1,4 @@
-#snowflake terraform configuring database, schema, warehouse and grants 
+#snowflake terraform configuring database, schema and grants 
 
 terraform {
   backend "local" {
