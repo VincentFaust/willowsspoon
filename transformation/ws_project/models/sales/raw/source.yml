@@ -10,6 +10,4 @@ sources:
       - name: orders_line_items 
       - name: customers
       - name: customers_addresses
-      - name: products
-      - name: products_options
-      - name: products_variants
+
