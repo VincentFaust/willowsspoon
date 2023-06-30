@@ -6,20 +6,22 @@
 - [Architecture Diagram](#architecture-diagram)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
-  - [Building the Infrastructure](#building-the-infrastructure)
+  - [Building The Infrastructure](#building-the-infrastructure)
     - [AWS](#aws)
     - [Snowflake](#snowflake)
-    - [Hosting Airbyte on the EC2 Instance](#hosting-airbyte-on-the-ec2-instance)
+    - [Hosting Airbyte On The EC2 Instance](#hosting-airbyte-on-the-ec2-instance)
     - [Installing Octavia CLI](#installing-octavia-cli)
-  - [Setting up the dbt Project](#setting-up-the-dbt-project)
+  - [Setting Up The DBT Project](#setting-up-the-dbt-project)
   - [Running Airflow Locally](#running-airflow-locally)
+  - [Setting Up Hex](#setting-up-hex)
+- [What To Do As Your Business Grows](#what-to-do-as-your-business-grows)
 
 
 # Goal
 
 This project is designed to empower small businesses by unlocking the full potential of their data. Small business owners often wear many hats and juggle a variety of roles and responsibilities. It's challenging enough to understand the full picture with the data you have, let alone figuring out how to set up infrastructure or how all the pieces connect together. 
 
-My hope is to simplify the process by providing a starter blueprint. At the end, I'll also add some tips of key changes to make as your business grows.  
+My hope is to simplify the process by providing a basic starter blueprint that's more focused on the pipeline and infrastructure rather than the reporting aspects. At the end, I'll also add some tips of key changes to make as your business grows.  
 
 
 
@@ -63,7 +65,7 @@ Before you begin, make sure you have the following:
 4. The AWS CLI installed on your local machine. 
 5. After cloning the repo, run `pip install -r requirements.txt` in the project directory to get the necessary dependencies. 
 
-## Building the Infrastructure
+## Building The Infrastructure
 
 ### AWS 
 1. Clone the project repository to your local machine.
@@ -108,7 +110,7 @@ export SNOWFLAKE_REGION="{region_name}"
 ```
 
 
-### Hosting Airbyte on the EC2 Instance
+### Hosting Airbyte On The EC2 Instance
 
 1. Connect to the EC2 instance using SSH.
 
@@ -182,7 +184,7 @@ This will generate the source for you. Replace all the config variables with you
 7. Repeat above steps for destination. Just swap the word "sources" with "destination" 
 
 
-## Setting up the dbt Project
+## Setting Up The DBT Project
 
 1. Clone the dbt project to your local machine.
 
@@ -208,3 +210,23 @@ This will generate the source for you. Replace all the config variables with you
 
 5. Trigger the Airflow DAG to run both the Airbyte and dbt services.
 
+## Setting Up Hex 
+
+1. Navigate to hex here: https://hex.tech/ 
+
+2. Make an account and sign up for the free tier 
+
+3. Navigate to "Data Sources" and input your snowflake credentials, which should be in the admin section
+of your snowflake account. 
+
+4. Once you're able to connect, that's it! You can start builing charts with sql! 
+
+
+# What To Do As Your Business Grows 
+
+1. Begin using DBT cloud. Honestly, it could even be done from the start since they also have a free tier for 
+a single developer. The point of using DBT cloud is that you can call the service directly with Airflow. 
+
+2. Create developement versions of your resources (EC2, Airflow, etc.). As you make changes, you want to be able to test them without breaking your existing reporting pipeline. Different versions. 
+
+3. Use a managed provider for orchestration. Typically, we an orchestrated hosted in the cloud. This greatly simplifies the process, which means less manual overhead. The tradeoff though is cost; at around $0.50 / minute, it's one of the most expensive cloud resources there is, which is why we didn't start there. 
