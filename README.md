@@ -1,26 +1,49 @@
+# Table of Contents
+
+- [Goal](#goal)
+- [Project Overview](#project-overview)
+- [Codebase](#codebase)
+- [Architecture Diagram](#architecture-diagram)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Building the Infrastructure](#building-the-infrastructure)
+    - [AWS](#aws)
+    - [Snowflake](#snowflake)
+    - [Hosting Airbyte on the EC2 Instance](#hosting-airbyte-on-the-ec2-instance)
+    - [Installing Octavia CLI](#installing-octavia-cli)
+  - [Setting up the dbt Project](#setting-up-the-dbt-project)
+  - [Running Airflow Locally](#running-airflow-locally)
+
+
+# Goal
+
+This project is designed to empower small businesses by unlocking the full potential of their data. Small business owners often wear many hats and juggle a variety of roles and responsibilities. It's challenging enough to understand the full picture with the data you have, let alone figuring out how to set up infrastructure or how all the pieces connect together. 
+
+My hope is to simplify the process by providing a starter blueprint. At the end, I'll also add some tips of key changes to make as your business grows.  
+
+
+
+
 # Project Overview
 
-During the pandemic, my partner and I cofounded a small business specializing in crafting homemade, fresh dog cookies and jerky. Our passion for creating these treats stemmed from our own experiences making them for our pets. 
+During the pandemic, my partner and I launched a small business making homemade, fresh dog cookies and jerky. We were already crafting these treats for our own dogs and thought it would be a fun venture to extend this passion to a wider audience. 
 
-Our goal with the project was never to attempt to reach massive growth or scalability, but simply to build something from scratch and share one of our passions with other dog lovers. 
+This project extracts source data from the shopify API and loads it into snowflake. Once in the warehouse, DBT(Data Build Tool) transforms the raw data into facts and dimensions so it's ready for downstream use in our visualization tool (Hex). Finally, airflow calls these services on a fixed schedule.
 
-## Shopify ETL 
-
-This project extracts data from the shopify API and loads it into snowflake. Once in the warehouse, the data is transformed into facts and dimensions with DBT and is visualized with Hex. Finally, airfllow calls these services in a dag on a fixed schedule. 
+Here is an example of a final output: Willow's Spoon nationwide sales. 
 
 ![sales_locations](images/sales_breakouts.png)
-
 
 
 ## Codebase
 
 1. **Infrastructure-core**: Terraform code of cloud resources - ec2 instance (where Airbyte is hosted), snowflake(database, schema, warehouses and grants) and airbyte(code as configuration). These resources are responsible for the extract-load portion of the pipeline. 
 
-2. **Transformation**: DBT to translate raw data into facts and dimensions for a business process (sales). I've input a logical separation between source, staging and serving into their own respective schemas. The end result in serving leaves downstream users with an atomic grain of sales data which is meant to act as a template for their use cases to build off. The DBT code is packaged up on a docker image and then run on AWS ECS. 
+2. **Transformation**: DBT is used to model the data we get from Shopify (which is in 3NF) into facts and dimensions for a specific business process (sales). Additionally, the project uses a custom schema to create a separation of logic between source, staging and serving data. For our sales fact, the grain of the data is set to a unique transaction. This logic is packaged up on a docker image, uploaded on AWS ECR and then run on AWS ECS.
 
-3. **Orchestration**: Airflow is run locally on a docker image and calls airbyte and dbt as tasks in a dag. My choice to run locally was driven solely by the expensive managed cloud offerings. 
+3. **Orchestration**: I opted to run airflow locally on a docker image. It calls airbyte and dbt as nodes in a dag. I wanted to use one of the managed services, but after seeing the cost and fresh off the pain of accidently leaving an EC2 instance on - I chose not too. 
 
-4. **Github Actions**: An integration pipeline to automate python linting (pylint) and sql (sqlfluff, both syntax and tests). A unique feature build into the pipeline is the configuration for branch based deployments, which runs and tests only modified sql files in their own database.
+4. **Github Actions**: An integration pipeline to automate python linting (pylint) and sql (sqlfluff for syntax rules and tests). A unique feature build into the pipeline is the configuration for branch based deployments, which runs and tests only modified sql files in their own database.
 
 
 ## Architecture Diagram 
@@ -28,9 +51,9 @@ This project extracts data from the shopify API and loads it into snowflake. Onc
 ![ws_diagram](images/ws_diagram.png)
 
 
-## Getting Started 
+# Getting Started 
 
-# Prerequisites
+## Prerequisites
 
 Before you begin, make sure you have the following:
 
@@ -40,9 +63,9 @@ Before you begin, make sure you have the following:
 4. The AWS CLI installed on your local machine. 
 5. After cloning the repo, run `pip install -r requirements.txt` in the project directory to get the necessary dependencies. 
 
-# Building the Infrastructure
+## Building the Infrastructure
 
-## AWS 
+### AWS 
 1. Clone the project repository to your local machine.
 
 2. Navigate to the terraform directory in the cloned repository. Update the ssh config block with your own IP address or can opt to leave it open ```["0.0.0.0/0"]``` for maximum flexibility. 
@@ -53,7 +76,7 @@ Before you begin, make sure you have the following:
 
 5. Run terraform apply to build the AWS EC2 instance. 
 
-## Snowflake 
+### Snowflake 
 
 We need to create a separate user account from the main snowflake credentials so we can run terraform. 
 1. Create an RSA key for Authentication 
@@ -85,7 +108,7 @@ export SNOWFLAKE_REGION="{region_name}"
 ```
 
 
-## Hosting Airbyte on the EC2 Instance
+### Hosting Airbyte on the EC2 Instance
 
 1. Connect to the EC2 instance using SSH.
 
@@ -113,7 +136,7 @@ wget https://raw.githubusercontent.com/airbytehq/airbyte-platform/main/{.env,fla
 docker compose up -d 
 ``` 
 
-## Installing Octavia CLI 
+### Installing Octavia CLI 
 
 1. Install Octavia to boostrap resources 
 
@@ -159,7 +182,7 @@ This will generate the source for you. Replace all the config variables with you
 7. Repeat above steps for destination. Just swap the word "sources" with "destination" 
 
 
-# Setting up the dbt Project
+## Setting up the dbt Project
 
 1. Clone the dbt project to your local machine.
 
@@ -173,7 +196,7 @@ This will generate the source for you. Replace all the config variables with you
 
 6. Push the dbt project to a git repository.
 
-# Running Airflow Locally
+## Running Airflow Locally
 
 1. Clone the Airflow project to your local machine.
 
