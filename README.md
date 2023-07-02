@@ -14,6 +14,7 @@
   - [Setting Up The DBT Project](#setting-up-the-dbt-project)
   - [Running Airflow Locally](#running-airflow-locally)
   - [Setting Up Hex](#setting-up-hex)
+- [What a Workflow Might Look Like](#what-a-workflow-might-look-like)
 - [What To Do As Your Business Grows](#what-to-do-as-your-business-grows)
 
 
@@ -186,29 +187,76 @@ This will generate the source for you. Replace all the config variables with you
 
 ## Setting Up The DBT Project
 
-1. Clone the dbt project to your local machine.
+1. Install DBT with this command: `pip install dbt-snowflake` 
 
-2. Install dbt on your local machine. For more information on how to install dbt, visit the official dbt website.
+* Note: while we're setting it specifically for snowflake, DBT is supported by several OLAP/OLTP engines. 
+Check that out here: https://docs.getdbt.com/docs/core/connect-data-platform/about-core-connections
 
-3. Configure the dbt project to use the Snowflake destination. 
+2. Choose a location where you want your DBT project to reside and run dbt init.
 
-4. Customize your profiles yml for your needs. 
+3. Input your credentials in the user flow, like account, project name, role, etc. 
+  - Use password for ease of use 
+  - Enter the password for your snowflake account 
+  - Enter the specific role you want to use that connects snowflake and DBT together
+  - Choose the warehouse, the database and the schema
 
-5. Build and test the dbt project locally.
+4. Enter `dbt debug` to verify the connection works and then congrats you're ready to start modeling!
 
-6. Push the dbt project to a git repository.
+5. Set up your dbt yaml file. I'd recommend building it in a similar structure as mine where enviornments 
+are split out. This will make development and testing easier. 
+
+6. After we're done modeling, it's time to upload an image of our project to AWS. Create a dockerfile above 
+the DBT project and copy my directions (rename for your project). 
+
+7. Build your image with `docker build -t <your_image_name:version>` 
+
+8. Navigate to AWS and search for the ECR service and select "view push commands" and copy them. These are the commands we'll use to push our image up to AWS. 
+
+* Note: any time we make a change to our project, we'll need to retag the image and push it up to AWS. 
+* Note: if you push multiple times, make sure to delete the obsolete images to save on cost. 
+
+9. Now we'll create the ECS service. Navigate to AWS and click on ECS. 
+
+10. Click on create an EC2 instance Linux + Networking. 
+
+11. Name your cluster and change your ec2 type as a t2.micro with one number of instances. Keep all the defaults for security and subnets. 
+
+12. Create a new role, which will create an ec2 instance role and click create to build your cluster. 
+
+13. Create a task definition and click on EC2.
+
+14. Elect all the defaults for your task definition. 
+
+15. For the memory and CPU elections, check out this documenation: https://aws.amazon.com/ec2/instance-types/t2/
+Make sure your elections can be met by your instance. 
+
+16. Click on add container and choose the image we made and pushed up to ECR by copying and pasting the image's URI. 
+
+17. That's it! The good news is we only had to do the ECS part once. 
+
 
 ## Running Airflow Locally
 
-1. Clone the Airflow project to your local machine.
+1. We're running airflow locally with docker, check the dockerfile under orchestration. 
 
-2. Install Airflow on your local machine. 
+Note: At the time of this project, snowflake and dbt had a version compatability issue, thus the workaround you see. 
 
-3. Configure the Airflow project to call the Airbyte and dbt services.
+2. Build the image with `docker build -t <your_image_name:version>` 
 
-4. Start the Airflow web server and scheduler.
+3. Create a folder locally that you want docker to map too. In my case, I've called mine "airflow". Additionally, within the folder create another folder called "dags". 
 
-5. Trigger the Airflow DAG to run both the Airbyte and dbt services.
+3. Run the container `docker run -p 8080:8080 -v /$(pwd):/opt/airflow <your_image_name:version>
+
+4. Enter in your browser `localhost:8080` to access to the airflow UI. 
+
+5. Now we need to get our credentials from our different services. For airbyte, head over to the UI and click on the connection we previously made. In the URL, we can also see the `connection_id` after `connections`. Alternatively we can also look at the work we bootstrapped, where it would be in the connection directory. 
+
+6. Back in airflow, navigate to `admin` and click create connection. Then, enter in the connection id and the host that the EC2 resource is running on. Finally, use port 8001 and click save. 
+
+Note: depending on the airbyte version you're using you may be prompted to enter in your airbyte login credentials. 
+
+7. Now to configure our DBT service. We'll call it with the ECS operator. You will need to get the task definition and cluster from AWS. 
+
 
 ## Setting Up Hex 
 
@@ -219,7 +267,18 @@ This will generate the source for you. Replace all the config variables with you
 3. Navigate to "Data Sources" and input your snowflake credentials, which should be in the admin section
 of your snowflake account. 
 
-4. Once you're able to connect, that's it! You can start builing charts with sql! 
+4. Once you're able to connect, that's it! You can start visualizing the queries you made with DBT! 
+
+## What A Workflow Might Look Like 
+1. During development you're testing in your development database on a separate branch. By default it's set to dev, but under the hood, anytime you run `dbt run`, it translates to `dbt run --target dev`. 
+
+2. If the data looks as you'd expect, run `sqlfluff lint transformation/<your_project_name> and fix any errors. 
+
+3. Now we're ready to build our CI pipeline. On your development branch, push everything up to github and run `dbt run --target ci`. 
+
+4. If all the checks pass, merge the branch. 
+
+5. Push up the latest version of your code to AWS ECR. 
 
 
 # What To Do As Your Business Grows 
