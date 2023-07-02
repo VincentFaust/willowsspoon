@@ -60,24 +60,24 @@ Here is an example of a final output: Willow's Spoon nationwide sales.
 
 Before you begin, make sure you have the following:
 
-1. An AWS account with appropriate permissions to create an EC2 instance and Snowflake resources.
-2. Terraform installed on your local machine. 
-3. Docker installed on your local machine. 
-4. The AWS CLI installed on your local machine. 
-5. After cloning the repo, run `pip install -r requirements.txt` in the project directory to get the necessary dependencies. 
+1. An AWS account with appropriate permissions to create various resources.
+2. A snowflake account 
+3. Terraform installed on your local machine. 
+4. Docker installed on your local machine. 
+5. The AWS CLI installed on your local machine. 
+6. Clone the repo 
+7. run `pip install -r requirements.txt` in the project directory. 
 
 ## Building The Infrastructure
 
 ### AWS 
-1. Clone the project repository to your local machine.
+1. Navigate to the terraform directory in the cloned repository. Update the ssh config block with your own IP address or can opt to leave it open ```["0.0.0.0/0"]``` for maximum flexibility. 
 
-2. Navigate to the terraform directory in the cloned repository. Update the ssh config block with your own IP address or can opt to leave it open ```["0.0.0.0/0"]``` for maximum flexibility. 
+2. Run terraform init to initialize the project.
 
-3. Run terraform init to initialize the project.
+3. Run terraform plan to see the changes that will be made to your infrastructure.
 
-4. Run terraform plan to see the changes that will be made to your infrastructure.
-
-5. Run terraform apply to build the AWS EC2 instance. 
+4. Run terraform apply to build the AWS EC2 instance. 
 
 ### Snowflake 
 
@@ -189,10 +189,10 @@ This will generate the source for you. Replace all the config variables with you
 
 1. Install DBT with this command: `pip install dbt-snowflake` 
 
-* Note: while we're setting it specifically for snowflake, DBT is supported by several OLAP/OLTP engines. 
-Check that out here: https://docs.getdbt.com/docs/core/connect-data-platform/about-core-connections
+* Note: while we're setting up specifically for snowflake, DBT is supported by several OLAP/OLTP engines. 
+Check here if you're intersted in a different configuration: https://docs.getdbt.com/docs/core/connect-data-platform/about-core-connections
 
-2. Choose a location where you want your DBT project to reside and run dbt init.
+2. Choose a location where you want your DBT project to reside and run `dbt init`.
 
 3. Input your credentials in the user flow, like account, project name, role, etc. 
   - Use password for ease of use 
@@ -232,20 +232,20 @@ Make sure your elections can be met by your instance.
 
 16. Click on add container and choose the image we made and pushed up to ECR by copying and pasting the image's URI. 
 
-17. That's it! The good news is we only had to do the ECS part once. 
+17. That's it! The good news is we only have to do the ECS part once. 
 
 
 ## Running Airflow Locally
 
 1. We're running airflow locally with docker, check the dockerfile under orchestration. 
 
-Note: At the time of this project, snowflake and dbt had a version compatability issue, thus the workaround you see. 
+* Note: At the time of this project, snowflake and dbt had a version compatability issue, thus the workaround you see. 
 
 2. Build the image with `docker build -t <your_image_name:version>` 
 
 3. Create a folder locally that you want docker to map too. In my case, I've called mine "airflow". Additionally, within the folder create another folder called "dags". 
 
-3. Run the container `docker run -p 8080:8080 -v /$(pwd):/opt/airflow <your_image_name:version>
+3. Run the container `docker run -p 8080:8080 -v /$(pwd):/opt/airflow <your_image_name:version>`
 
 4. Enter in your browser `localhost:8080` to access to the airflow UI. 
 
@@ -253,7 +253,7 @@ Note: At the time of this project, snowflake and dbt had a version compatability
 
 6. Back in airflow, navigate to `admin` and click create connection. Then, enter in the connection id and the host that the EC2 resource is running on. Finally, use port 8001 and click save. 
 
-Note: depending on the airbyte version you're using you may be prompted to enter in your airbyte login credentials. 
+* Note: depending on the airbyte version you're using you may be prompted to enter in your airbyte login credentials. 
 
 7. Now to configure our DBT service. We'll call it with the ECS operator. You will need to get the task definition and cluster from AWS. 
 
@@ -272,9 +272,9 @@ of your snowflake account.
 ## What A Workflow Might Look Like 
 1. During development you're testing in your development database on a separate branch. By default it's set to dev, but under the hood, anytime you run `dbt run`, it translates to `dbt run --target dev`. 
 
-2. If the data looks as you'd expect, run `sqlfluff lint transformation/<your_project_name> and fix any errors. 
+2. If the data looks as you'd expect, run `sqlfluff lint transformation/<your_project_name>` and fix any errors. 
 
-3. Now we're ready to build our CI pipeline. On your development branch, push everything up to github and run `dbt run --target ci`. 
+3. Now we're ready to build our CI pipeline. On your development branch, push everything up to github and create a PR request. Then run `dbt run --target ci`. 
 
 4. If all the checks pass, merge the branch. 
 
