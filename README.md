@@ -1,7 +1,7 @@
 # Willow's Spoon
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![SQL](https://img.shields.io/badge/SQL-4479A1?style=for-the-badge&logo=snowflakesql&logoColor=white)
 
 
 ![Airbyte](https://img.shields.io/badge/Airbyte-09a0b0?style=for-the-badge&logo=airbyte&logoColor=white)
