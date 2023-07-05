@@ -11,6 +11,7 @@
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![Snowflake](https://img.shields.io/badge/Snowflake-29BFE6?style=for-the-badge&logo=snowflake&logoColor=white)
+![SQLFluff](https://img.shields.io/badge/SQLFluff-4479A1?style=for-the-badge&logo=sqlfluff&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-623CE4?style=for-the-badge&logo=terraform&logoColor=white)
 
 
