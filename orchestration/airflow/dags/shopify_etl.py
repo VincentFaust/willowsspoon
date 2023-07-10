@@ -6,7 +6,7 @@ from airflow.providers.amazon.aws.operators.ecs import EcsRunTaskOperator
 
 with DAG(
     dag_id="willowsspoon_etl",
-    schedule_interval=None,
+    schedule_interval="0 0 * * *",
     start_date=pendulum.datetime(2020, 1, 1, tz="UTC"),
     catchup=False,
     tags=["extract-load"],
