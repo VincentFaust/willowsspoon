@@ -303,8 +303,7 @@ of your snowflake account.
 
 # What To Do As Your Business Grows 
 
-1. Begin using DBT cloud. Honestly, it could even be done from the start since they also have a free tier for 
-a single developer. The point of using DBT cloud is that you can call the service directly with Airflow. 
+1. Begin using DBT cloud. It simplifies overhead set up since you can call it directly as a package via Airflow. The downside though is that it costs $100 / month.  
 
 2. Create developement versions of your resources (EC2, Airflow, etc.). As you make changes, you want to be able to test them without breaking your existing reporting pipeline. Different versions. 
 
