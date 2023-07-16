@@ -64,7 +64,7 @@ Here is an example of a final output: Willow's Spoon nationwide sales.
 
 ## Codebase
 
-1. **Infrastructure-core**: Terraform code of cloud resources - ec2 instance (where Airbyte is hosted), snowflake(database, schema, warehouses and grants) and airbyte(code as configuration). These resources are responsible for the extract-load portion of the pipeline. 
+1. **Infrastructure**: Terraform code of cloud resources - ec2 instance (where Airbyte is hosted), snowflake(database, schema, warehouses and grants) and airbyte(code as configuration). These resources are responsible for the extract-load portion of the pipeline. 
 
 2. **Transformation**: DBT is used to model the data we get from Shopify (which is in 3NF) into facts and dimensions for a specific business process (sales). Additionally, the project uses a custom schema to create a separation of logic between source, staging and serving data. For our sales fact, the grain of the data is set to a unique transaction. This logic is packaged up on a docker image, uploaded on AWS ECR and then run on AWS ECS.
 
