@@ -22,8 +22,8 @@
 
 - [Goal](#goal)
 - [Project Overview](#project-overview)
-- [Codebase](#codebase)
 - [Architecture Diagram](#architecture-diagram)
+- [Codebase](#codebase)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Building The Infrastructure](#building-the-infrastructure)
@@ -57,6 +57,10 @@ Here is an example of a final output: Willow's Spoon nationwide sales.
 
 ![sales_locations](images/sales_breakouts.png)
 
+## Architecture Diagram 
+
+![ws_diagram](images/ws_diagram.png)
+
 
 ## Codebase
 
@@ -68,10 +72,6 @@ Here is an example of a final output: Willow's Spoon nationwide sales.
 
 4. **Github Actions**: An integration pipeline to automate python linting (pylint) and sql (sqlfluff for syntax rules and tests). A unique feature build into the pipeline is the configuration for branch based deployments, which runs and tests only modified sql files in their own database.
 
-
-## Architecture Diagram 
-
-![ws_diagram](images/ws_diagram.png)
 
 
 # Getting Started 
