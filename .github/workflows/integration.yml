@@ -1,7 +1,7 @@
 name: integration 
 on: 
   pull_request:
-    branches: [main]
+    branches: [main, development]
 
 env:
   GH_REF: ${{ github.ref }}
