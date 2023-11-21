@@ -7,14 +7,13 @@ terraform {
   required_providers {
     snowflake = {
       source  = "Snowflake-Labs/snowflake"
-      version = "0.66.2"
+      version = "0.68.0"
     }
   }
 }
 provider "snowflake" {
-  alias    = "sys_admin"
-  role     = "SYSADMIN"
-  username = "tf-snow"
+  alias = "sys_admin"
+  role  = "SYSADMIN"
 }
 
 resource "snowflake_database" "raw" {
