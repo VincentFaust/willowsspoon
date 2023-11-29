@@ -1,8 +1,8 @@
-resource_name: Shopify
+resource_name: shopify
 definition_type: source
 definition_id: 9da77001-af33-4bcd-be46-6252bf9342b9
 definition_image: airbyte/source-shopify
-definition_version: 0.3.4
+definition_version: 1.1.4
 configuration:
   shop: willows-spoon
   start_date: '2020-01-01'
