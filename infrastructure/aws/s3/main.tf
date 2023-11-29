@@ -25,18 +25,6 @@ resource "aws_s3_bucket" "raw_bucket" {
 }
 
 
-resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
-  bucket = aws_s3_bucket.raw_bucket.id
-
-  rule {
-    id = "rule-1"
-
-    expiration {
-      days = 30
-    }
-    status = "Enabled"
-  }
-}
 
 resource "aws_s3_bucket_public_access_block" "shopify_raw_public_access_block" {
   bucket = aws_s3_bucket.raw_bucket.id
