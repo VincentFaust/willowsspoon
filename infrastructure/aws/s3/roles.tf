@@ -1,5 +1,6 @@
 resource "aws_iam_role" "snowflake_role" {
   name = "snowflake_s3_access_role"
+
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -7,11 +8,11 @@ resource "aws_iam_role" "snowflake_role" {
         Effect = "Allow",
         Action = "sts:AssumeRole",
         Principal = {
-          AWS = ["arn:aws:iam::791808326604:user/32ff0000-s", "arn:aws:iam::784153138185:user/vincentffaust"]
+          AWS = "arn:aws:iam::791808326604:user/32ff0000-s"
         },
         Condition = {
           StringEquals = {
-            "sts:ExternalId" : "ME48922_SFCRole=2_nCCu+7CdoP1v/Y3J6zxJXzXPAnc="
+            "sts:ExternalId" : "ME48922_SFCRole=2_F/yduUwqlEGhgkSVO75S9GffJPE="
           }
         }
       }
@@ -19,13 +20,10 @@ resource "aws_iam_role" "snowflake_role" {
   })
 }
 
-
-
 resource "aws_iam_policy" "snowflake_access" {
   name        = "snowflake_access_policy"
   path        = "/"
   description = "Policy for Snowflake to access specific S3 bucket"
-
   policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
@@ -45,7 +43,6 @@ resource "aws_iam_policy" "snowflake_access" {
     ]
   })
 }
-
 resource "aws_iam_role_policy_attachment" "snowflake_access_attachment" {
   role       = aws_iam_role.snowflake_role.name
   policy_arn = aws_iam_policy.snowflake_access.arn
