@@ -8,7 +8,7 @@ configuration:
     format_type: Parquet
   access_key_id: '**********'
   s3_bucket_name: shopify-raw
-  s3_bucket_path: /
+  s3_bucket_path: willows-spoon
   s3_path_format: ${STREAM_NAME}/${YEAR}/${MONTH}/${DAY}
   s3_bucket_region: us-east-2
   secret_access_key: '**********'
