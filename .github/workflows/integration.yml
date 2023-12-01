@@ -1,0 +1,77 @@
+name: integration
+on:
+  pull_request:
+    branches: [main]
+env:
+  GH_REF: ${{ github.ref }}
+  DBT_ENV_SECRET_PASSWORD: ${{ secrets.DBT_ENV_SECRET_PASSWORD }}
+jobs:
+  integrate:
+    runs-on: ubuntu-latest
+    steps:
+      # checkout code
+      - name: checkout code
+        uses: actions/checkout@v3
+      # set up python
+      - name: set up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      # install dependencies
+      - name: set up dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pylint
+
+      # run python linting
+      - name: python linting
+        run: pylint --rcfile=./orchestration/airflow/.pylintrc ./orchestration/airflow/dags/*.py
+
+      # set up dbt dependencies
+      - name: set up dbt deps
+        run: |
+          cd transformation/ws_project
+          dbt deps
+
+      # run sql linting
+      - name: run sql linting
+        run: |
+          sqlfluff lint transformation/ws_project
+
+      # checkout code back to main branch
+      - name: checkout to main
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
+      - name: recreate dbt manifest
+        run: |
+          cd transformation/ws_project
+          dbt deps
+          dbt compile --target prod
+
+      # publish the manifest
+      - name: upload dbt manifest
+        uses: actions/upload-artifact@v3
+        with:
+          name: manifest.json
+          path: transformation/ws_project/target/manifest.json
+
+      # checkout back to branch
+      - name: checkout to branch
+        uses: actions/checkout@v3
+
+      # download manifest to current branch
+      - uses: actions/download-artifact@v3
+        with:
+          name: manifest.json
+          path: transformation/ws_project
+
+      # run and test sql files with modified state flags
+      - name: dbt run on modified state files
+        run: |
+          cd transformation/ws_project
+          dbt deps
+          dbt run -m state:modified+1 --defer --state . --target ci
+          dbt test -m state:modified+1 --defer --state . --target ci
