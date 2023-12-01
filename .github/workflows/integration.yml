@@ -5,6 +5,7 @@ on:
 
 env:
   GH_REF: ${{ github.ref }}
+  SNOWFLAKE_ACCOUNT: me48922.us-east-2.aws
   DBT_ENV_SECRET_PASSWORD: ${{ secrets.DBT_ENV_SECRET_PASSWORD }}
 
 jobs:
