@@ -36,12 +36,16 @@ jobs:
       # set up dbt dependencies 
       - name: set up dbt deps 
         run: |
+          export SNOWFLAKE_ACCOUNT=me48922.us-east-2.aws
+          export DBT_ENV_SECRET_PASSWORD=${{ secrets.DBT_ENV_SECRET_PASSWORD }}
           cd transformation/ws_project
           dbt deps 
       
       # run sql linting 
       - name: run sql linting 
-        run:
+        run: |
+          export SNOWFLAKE_ACCOUNT=me48922.us-east-2.aws
+          export DBT_ENV_SECRET_PASSWORD=${{ secrets.DBT_ENV_SECRET_PASSWORD }}
           sqlfluff lint transformation/ws_project
       
       # checkout code back to main branch 
@@ -53,6 +57,8 @@ jobs:
       # get production dbt manifest 
       - name: recreate dbt manifest 
         run: | 
+          export SNOWFLAKE_ACCOUNT=me48922.us-east-2.aws
+          export DBT_ENV_SECRET_PASSWORD=${{ secrets.DBT_ENV_SECRET_PASSWORD }}
           cd transformation/ws_project
           dbt deps 
           dbt compile --target prod 
@@ -77,8 +83,9 @@ jobs:
       # run and test sql files with modified state flags
       - name: dbt run on modified state files 
         run: | 
+          export SNOWFLAKE_ACCOUNT=me48922.us-east-2.aws
+          export DBT_ENV_SECRET_PASSWORD=${{ secrets.DBT_ENV_SECRET_PASSWORD }}
           cd transformation/ws_project
           dbt deps 
           dbt run -m state:modified+1 --defer --state . --target ci 
           dbt test -m state:modified+1 --defer --state . --target ci 
-
