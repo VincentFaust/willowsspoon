@@ -1,19 +1,14 @@
-resource_name: snowflake
+resource_name: s3
 definition_type: destination
-definition_id: 424892c4-daac-4491-b35d-c6688ba547ba
-definition_image: airbyte/destination-snowflake
-definition_version: 0.4.61
+definition_id: 4816b78f-1489-44c1-9060-4b19d5fa9362
+definition_image: airbyte/destination-s3
+definition_version: 0.5.1
 configuration:
-  host: co11573.us-east-2.aws.snowflakecomputing.com
-  role: sysadmin
-  schema: raw
-  database: spoon_raw
-  username: vfaust
-  warehouse: etl
-  encryption:
-    encryption_type: none
-  credentials:
-    password: '**********'
-  loading_method:
-    method: Standard
-  file_buffer_count: 10
+  format:
+    format_type: Parquet
+  access_key_id: '**********'
+  s3_bucket_name: shopify-raw
+  s3_bucket_path: willows-spoon
+  s3_path_format: ${STREAM_NAME}/${YEAR}/${MONTH}/${DAY}
+  s3_bucket_region: us-east-2
+  secret_access_key: '**********'

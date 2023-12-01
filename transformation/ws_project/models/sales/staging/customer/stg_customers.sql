@@ -1,8 +1,8 @@
 with source_data as (
 
     select
-        date_trunc("day", created_at)::date as created_at
-        , _airbyte_unique_key --unique key
+        date_trunc('day', to_timestamp_ntz(created_at:member0::string))::date as created_at
+        , _airbyte_ab_id
         , first_name
         , last_name
         , email
