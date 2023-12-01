@@ -54,6 +54,11 @@ jobs:
         with:
           ref: main 
       
+      - name: DBT Debug
+        run: |
+          cd transformation/ws_project
+          dbt debug
+        
       # get production dbt manifest 
       - name: recreate dbt manifest 
         run: | 
