@@ -1,15 +1,13 @@
 with sales as (
     select
-        _airbyte_unique_key
-        , _airbyte_orders_hashid
-        , checkout_id
+        _airbyte_ab_id
         , current_total_tax
         , order_number
         , total_price
         , address1
         , zip
         , city
-        , contact_email
+        , email
         , first_name
         , last_name
         , date(created_at) as created_at
@@ -19,13 +17,12 @@ with sales as (
 ,
 final as (
     select
-        {{ dbt_utils.surrogate_key(["_airbyte_unique_key"]) }}
+        {{ dbt_utils.surrogate_key(["_airbyte_ab_id"]) }}
             as sales_key
         , order_number
         , total_price
         , {{ dbt_utils.surrogate_key(["created_at"]) }} as created_at_key
-        , {{ dbt_utils.surrogate_key(["address1","zip","city"]) }} as location_key
-        , {{ dbt_utils.surrogate_key(["first_name", "last_name", "contact_email"]) }}
+        , {{ dbt_utils.surrogate_key(["first_name", "last_name", "email"]) }}
             as customer_identifier_key
 
     from sales

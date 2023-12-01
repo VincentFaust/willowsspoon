@@ -2,36 +2,36 @@ willows_spoon:
   target: dev 
   outputs:
     dev:
-      account: co11573.us-east-2.aws
+      account: me48922.us-east-2.aws
       database: spoon_dev 
       password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}" 
       role: accountadmin
       schema: staging 
       threads: 10
       type: snowflake
-      user: vfaust 
-      warehouse: etl
-    
+      user: vincentffaust 
+      warehouse: compute_wh
+
     ci:
-      account: co11573.us-east-2.aws
+      account: me48922.us-east-2.aws
       database: spoon_ci
       password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}" 
       role: accountadmin
       schema: public 
       threads: 10 
       type: snowflake
-      user: vfaust 
-      warehouse: etl
+      user: vincentffaust
+      warehouse: compute_wh
     
     prod:
-      account: co11573.us-east-2.aws
+      account: me48922.us-east-2.aws
       database: spoon_prod 
       password: "{{ env_var('DBT_ENV_SECRET_PASSWORD') }}" 
       role: accountadmin
       schema: staging 
       threads: 10 
       type: snowflake
-      user: vfaust 
-      warehouse: etl
+      user: vincentffaust 
+      warehouse: compute_wh
 
 
