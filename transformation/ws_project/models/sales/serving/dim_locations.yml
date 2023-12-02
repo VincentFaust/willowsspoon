@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: dim_locations
+    columns:
+      - name: location_key
+        description: the surrogate key of the model combining first name, last name and email 
+        test:
+          - not_null 
+          - unique 
+
+
+

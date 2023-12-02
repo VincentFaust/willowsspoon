@@ -4,7 +4,7 @@ with sales as (
         , current_total_tax
         , order_number
         , total_price
-        , address1
+        , address1 
         , zip
         , city
         , country
@@ -25,6 +25,8 @@ final as (
         , {{ dbt_utils.surrogate_key(["created_at_ts"]) }} as created_at_key
         , {{ dbt_utils.surrogate_key(["first_name", "last_name", "email"]) }}
             as customer_identifier_key
+        , {{ dbt_utils.surrogate_key(["address1", "city", "country", "zip"])}} 
+            as location_key
 
     from sales
 )
