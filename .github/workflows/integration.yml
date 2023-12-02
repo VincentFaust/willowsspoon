@@ -75,6 +75,5 @@ jobs:
         run: |
           cd transformation/ws_project
           dbt deps
-          dbt run -m stg_orders --full-refresh --target ci
           dbt run -m state:modified+1 --defer --state . --target ci
           dbt test -m state:modified+1 --defer --state . --target ci
