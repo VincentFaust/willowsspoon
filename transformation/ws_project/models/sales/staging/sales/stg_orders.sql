@@ -8,7 +8,6 @@
 with source_data as (
     select
         created_at
-        , TO_TIMESTAMP(created_at:member0::varchar) as created_at_ts
         , _airbyte_ab_id
         , current_total_tax
         , order_number
@@ -22,24 +21,22 @@ with source_data as (
         , shipping_address:longitude::string as longitude
         , shipping_address:first_name::string as first_name
         , shipping_address:last_name::string as last_name
+        , TO_TIMESTAMP(created_at:member0::varchar) as created_at_ts
     from {{ source("shopify", "orders") }}
 )
 
 ,
 
 max_created_at as (
-    select
-        max(created_at_ts) as max_created_at_ts
-    from source_data 
+    select MAX(created_at_ts) as max_created_at_ts
+    from source_data
 )
 
-select
-    s.*
-from source_data s
-left join max_created_at m
-on s.created_at_ts > m.max_created_at_ts
+select s.*
+from source_data as s
+left join max_created_at as m
+    on s.created_at_ts > m.max_created_at_ts
 
 {% if is_incremental() %}
     where m.max_created_at_ts is not null
 {% endif %}
-
