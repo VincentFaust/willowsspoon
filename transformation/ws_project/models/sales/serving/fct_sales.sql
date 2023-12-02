@@ -7,10 +7,11 @@ with sales as (
         , address1
         , zip
         , city
+        , country
         , email
         , first_name
         , last_name
-        , date(created_at) as created_at
+        , created_at_ts
     from {{ ref("stg_orders") }}
 )
 
@@ -21,9 +22,11 @@ final as (
             as sales_key
         , order_number
         , total_price
-        , {{ dbt_utils.surrogate_key(["created_at"]) }} as created_at_key
+        , {{ dbt_utils.surrogate_key(["created_at_ts"]) }} as created_at_key
         , {{ dbt_utils.surrogate_key(["first_name", "last_name", "email"]) }}
             as customer_identifier_key
+        , {{ dbt_utils.surrogate_key(["address1", "city", "country", "zip"]) }}
+            as location_key
 
     from sales
 )

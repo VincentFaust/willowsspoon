@@ -4,8 +4,7 @@ models:
   - name: fct_sales 
     columns:
       - name: sales_key 
-        description: surrogate key built from airbyte key, product id and line item 
-                     to ensure uniqueness 
+        description: surrogate key built from the airbyte natural key
         test:
           - not_null 
           - unique 
@@ -17,11 +16,6 @@ models:
       
       - name: location_key
         description: surrogate key of locations 
-        test:
-          - not_null 
-      
-      - name: product_key 
-        description: surrogate key of products
         test:
           - not_null 
       
