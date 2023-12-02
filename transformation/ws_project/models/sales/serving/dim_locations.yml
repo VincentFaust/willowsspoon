@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: dim_locations
+    columns:
+      - name: location key
+        description: the surrogate key combining latitude, longitude, street, postcode and country 
+        test:
+          - not_null 
+          - unique 
+
