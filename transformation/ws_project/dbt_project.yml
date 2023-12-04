@@ -27,4 +27,7 @@ models:
       serving:
         +materialized: table 
         +schema: serving 
+      reporting:
+        +materialized: table
+        +schema: reporting
     

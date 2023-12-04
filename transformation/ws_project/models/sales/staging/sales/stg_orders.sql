@@ -21,7 +21,7 @@ with source_data as (
         , shipping_address:longitude::string as longitude
         , shipping_address:first_name::string as first_name
         , shipping_address:last_name::string as last_name
-        , TO_TIMESTAMP(created_at:member0::varchar) as created_at_ts
+        , DATE(TO_TIMESTAMP(created_at:member0::varchar)) as created_at_ts
     from {{ source("shopify", "orders") }}
 )
 
