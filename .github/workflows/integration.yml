@@ -5,6 +5,13 @@ on:
 env:
   GH_REF: ${{ github.ref }}
   DBT_ENV_SECRET_PASSWORD: ${{ secrets.DBT_ENV_SECRET_PASSWORD }}
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: "us-east-2"
+  ECR_REPOSITORY: "784153138185.dkr.ecr.us-east-2.amazonaws.com/dbt-repo"
+  ECS_DEV_SERVICE: dbt_service
+  ECS_DEV_CLUSTER: dev-cluster
+
 jobs:
   integrate:
     runs-on: ubuntu-latest
@@ -77,3 +84,20 @@ jobs:
           dbt deps
           dbt run -m state:modified+1 --defer --state . --target ci
           dbt test -m state:modified+1 --defer --state . --target ci
+
+      - name: build docker image
+        run: |
+          cd transformation
+          docker build -t $ECR_REPOSITORY:latest -f docker/Dockerfile .
+      
+      - name: login to aws ecr 
+        id: login-ecr 
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: push image to aws ecr
+        run: |
+          docker push $ECR_REPOSITORY:latest
+      
+      - name: update ECS service (dev)
+        run: |
+          aws ecs update-service --cluster $ECS_DEV_CLUSTER --service $ECS_DEV_SERVICE --force-new-deployment
