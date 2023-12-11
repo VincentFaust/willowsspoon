@@ -7,4 +7,3 @@ dbt-snowflake==1.4.2
 PyYAML==6.0
 sqlfluff==2.0.7
 sqlfluff-templater-dbt==2.0.7
-
