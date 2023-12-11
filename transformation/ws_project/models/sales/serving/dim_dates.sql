@@ -3,7 +3,7 @@ with stg_date as (
 )
 
 ,
---#
+
 transformed as (
     select
         {{ dbt_utils.surrogate_key(["date_day"]) }} as date_key

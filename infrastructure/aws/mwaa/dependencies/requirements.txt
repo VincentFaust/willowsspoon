@@ -1,0 +1,5 @@
+apache-airflow==2.5.1
+apache-airflow-providers-airbyte==3.1.0
+apache-airflow-providers-amazon==5.1.0
+
+
