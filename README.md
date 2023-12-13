@@ -119,11 +119,19 @@ Before you begin, make sure you have the following:
 ## Building The Infrastructure
 
 ### AWS 
-1. Within the AWS subfolder, there are a number of AWS resources with their own sub folders. Navigate to any one of those folders. 
+1. We will use secrets manager to hold our secret. Using AWS cli, type: 
 
-2. In the provider block, update the profile to your own. You can find it locally within `.aws` 
+`aws secretsmanager create-secret --name <name> --secret-string <value>`
 
-2. Each resource uses an s3 bucket and a dynamo db table as the backend to track state. You will first need to replace this backend with a local one. So within each `main.tf`: 
+2. To check what you've set matches your expectations: 
+
+`aws secretsmanager get-secret-value --secret-id <name>`
+
+3. Within the AWS subfolder, there are a number of AWS resources with their own sub folders. Navigate to any one of those folders. 
+
+4. In the provider block, update the profile to your own. You can find it locally within `.aws` 
+
+5. Each resource uses an s3 bucket and a dynamo db table as the backend to track state. You will first need to replace this backend with a local one. So within each `main.tf`: 
 
 ```
   backend "s3" {
@@ -145,11 +153,11 @@ update on first creation to:
   }
 
 ```
-3. Run `terraform plan` to see the resources that will be built in your AWS account and then run `terraform apply` to create those changes. 
+6. Run `terraform plan` to see the resources that will be built in your AWS account and then run `terraform apply` to create those changes. 
 
-4. Then swap your backend from local to s3 and recopy the configurations. Now that those resources are built, we can use them. Run `terraform init migrate-state` to convert your backend. 
+7. Then swap your backend from local to s3 and recopy the configurations. Now that those resources are built, we can use them. Run `terraform init migrate-state` to convert your backend. 
 
-5. Repeat steps above for each AWS resource. 
+8. Repeat steps above for each AWS resource. 
 
 
 ### Snowflake 
