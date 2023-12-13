@@ -119,7 +119,7 @@ Before you begin, make sure you have the following:
 ## Building The Infrastructure
 
 ### AWS 
-1. We will use secrets manager to hold our secret. Using AWS cli, type: 
+1. We will use secrets manager to hold our secret thats needed for connecting to our warehouse. Using AWS cli, type: 
 
 `aws secretsmanager create-secret --name <name> --secret-string <value>`
 
@@ -215,6 +215,6 @@ of your snowflake account.
 
 4. For the sake of simplicity to just get started, I was purposely pretty lax about the security requirements. Realistically we could be adding more there, like security groups that restrict by IP addresses that allow you access to certain resources. 
 
-5. I noticed recently that an Airbyte terraform provider finally came out. It makes sense to update the Octavia CLI stuff to Airbyte, since we've already used terraform extensively and more people are familiar with terraform. 
+5. I noticed recently that an Airbyte terraform provider finally came out. It makes sense to update the Octavia CLI stuff to Terraform, since we've already used it so extensively and because more people are familiar with terraform, meaning it would be easier to ramp up other developers on the project. 
 
-6. If you have high velocity in your data, it makes sense to add a lifecycle configuration block for your s3 bucket. The idea here is that data is already being replicated downstream, so you don't need essentially two copies of it and because it can become very expensive otherwise. 
+6. If you have high velocity in your data, it makes sense to add a lifecycle configuration block for your s3 destination bucket. The idea here is that data is already being replicated downstream, so you don't need essentially two copies of it and because it can become very expensive. 
