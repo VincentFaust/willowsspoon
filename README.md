@@ -79,7 +79,7 @@ This project establishes an automated data pipeline that efficiently processes d
 ### Transformation
 
 
-2. **Transformation**: DBT is used to model the data from 3NF into facts and dimensions for a specific business process (sales). Additionally, the project has customized databases and schemas to create a logical separation between source, staging and serving data. For our sales fact, the grain of the data is set to a unique transaction. 
+2. **Transformation**: DBT models the data into facts and dimensions for a specific business process (sales). Additionally, the project has customized databases and schemas to create a logical separation between source, staging and serving. For our sales fact, the grain of the data is set to a unique transaction. 
 
 ### 3. Github Actions
 
